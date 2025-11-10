@@ -83,3 +83,4 @@ For detailed instructions, see documentation.
 ## License
 
 Proprietary - AguDaniel Logistics
+# logistics-admin-dashboard
