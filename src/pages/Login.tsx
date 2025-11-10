@@ -123,9 +123,9 @@ export const Login: React.FC = () => {
                 <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
                 <span className="text-gray-700">Remember me</span>
               </label>
-              <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">
+              <button type="button" className="text-blue-600 hover:text-blue-700 font-medium">
                 Forgot password?
-              </a>
+              </button>
             </div>
 
             {/* Submit button */}

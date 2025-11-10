@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Plus, Edit2, Trash2, Eye, Search, Truck, RotateCcw, Trash } from 'lucide-react';
 import { customerService, shipmentService } from '../services/api';
 import { Customer } from '../types';
@@ -40,21 +40,7 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
   const [submitting, setSubmitting] = useState(false);
   const { addToast } = useToast();
 
-  useEffect(() => {
-    fetchCustomers();
-  }, []);
-
-  useEffect(() => {
-    // Filter customers based on search term
-    const filtered = customers.filter((c) =>
-      c.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.phone.includes(searchTerm)
-    );
-    setFilteredCustomers(filtered);
-  }, [searchTerm, customers]);
-
-  const fetchCustomers = async () => {
+  const fetchCustomers = useCallback(async () => {
     try {
       setLoading(true);
       const response = await customerService.getCustomers();
@@ -78,7 +64,21 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
+
+  useEffect(() => {
+    fetchCustomers();
+  }, [fetchCustomers]);
+
+  useEffect(() => {
+    // Filter customers based on search term
+    const filtered = customers.filter((c) =>
+      c.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.phone.includes(searchTerm)
+    );
+    setFilteredCustomers(filtered);
+  }, [searchTerm, customers]);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this customer?')) {

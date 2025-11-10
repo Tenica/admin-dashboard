@@ -99,7 +99,7 @@ export const Signup: React.FC = () => {
     setSuccess('');
 
     try {
-      const response = await authService.createAdmin(
+      await authService.createAdmin(
         formData.fullName,
         formData.email,
         formData.password

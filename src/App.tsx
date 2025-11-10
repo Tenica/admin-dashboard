@@ -5,7 +5,6 @@ import { ToastProvider } from './context/ToastContext';
 import { Navbar } from './components/common/Navbar';
 import { Sidebar } from './components/common/Sidebar';
 import { ToastContainer } from './components/common/Toast';
-import { ProtectedRoute } from './components/common/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
 
 // Pages

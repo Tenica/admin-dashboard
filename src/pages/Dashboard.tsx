@@ -5,7 +5,7 @@ import { StatCard } from '../components/dashboard/StatCard';
 import { Loading } from '../components/common/Loading';
 import { shipmentService, customerService } from '../services/api';
 import { useToast } from '../context/ToastContext';
-import { Shipment, Customer } from '../types';
+import { Shipment } from '../types';
 
 interface DashboardStats {
   totalShipments: number;

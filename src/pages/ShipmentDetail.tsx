@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Edit2, Trash2, CheckCircle, Loader } from 'lucide-react';
 import { shipmentService } from '../services/api';
@@ -68,13 +68,24 @@ export const ShipmentDetail: React.FC<ShipmentDetailProps> = ({ isDark }) => {
     location: ''
   });
 
-  useEffect(() => {
-    if (id) {
-      fetchShipment();
+  const fetchTimeline = useCallback(async (shipmentId: string) => {
+    try {
+      setLoadingTimeline(true);
+      const timelineResponse = await shipmentService.getShipmentTimeline(shipmentId);
+      console.log('Timeline response:', timelineResponse);
+      const timelineData = timelineResponse.timeline || timelineResponse.data?.timeline || [];
+      console.log('Timeline data extracted:', timelineData);
+      setTimeline(Array.isArray(timelineData) ? timelineData : []);
+    } catch (timelineError) {
+      console.error('Error fetching timeline:', timelineError);
+      addToast('Failed to load shipment timeline', 'error');
+      setTimeline([]);
+    } finally {
+      setLoadingTimeline(false);
     }
-  }, [id]);
+  }, [addToast]);
 
-  const fetchShipment = async () => {
+  const fetchShipment = useCallback(async () => {
     try {
       setLoading(true);
       // Fetch all shipments and find the one with matching ID
@@ -111,24 +122,13 @@ export const ShipmentDetail: React.FC<ShipmentDetailProps> = ({ isDark }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, addToast, fetchTimeline]);
 
-  const fetchTimeline = async (shipmentId: string) => {
-    try {
-      setLoadingTimeline(true);
-      const timelineResponse = await shipmentService.getShipmentTimeline(shipmentId);
-      console.log('Timeline response:', timelineResponse);
-      const timelineData = timelineResponse.timeline || timelineResponse.data?.timeline || [];
-      console.log('Timeline data extracted:', timelineData);
-      setTimeline(Array.isArray(timelineData) ? timelineData : []);
-    } catch (timelineError) {
-      console.error('Error fetching timeline:', timelineError);
-      addToast('Failed to load shipment timeline', 'error');
-      setTimeline([]);
-    } finally {
-      setLoadingTimeline(false);
+  useEffect(() => {
+    if (id) {
+      fetchShipment();
     }
-  };
+  }, [id, fetchShipment]);
 
   const handleDelete = async () => {
     if (!shipment || !window.confirm('Are you sure you want to delete this shipment?')) {

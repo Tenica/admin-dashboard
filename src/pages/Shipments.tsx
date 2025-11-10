@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Trash2, Eye, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { shipmentService } from '../services/api';
@@ -18,21 +18,7 @@ export const Shipments: React.FC<ShipmentsProps> = ({ isDark }) => {
   const navigate = useNavigate();
   const { addToast } = useToast();
 
-  useEffect(() => {
-    fetchShipments();
-  }, []);
-
-  useEffect(() => {
-    // Filter shipments based on search term
-    const filtered = shipments.filter((s) =>
-      s.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.origin.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.destination.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredShipments(filtered);
-  }, [searchTerm, shipments]);
-
-  const fetchShipments = async () => {
+  const fetchShipments = useCallback(async () => {
     try {
       setLoading(true);
       const response = await shipmentService.getShipments();
@@ -46,7 +32,22 @@ export const Shipments: React.FC<ShipmentsProps> = ({ isDark }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
+
+  useEffect(() => {
+    fetchShipments();
+  }, [fetchShipments]);
+
+  useEffect(() => {
+    // Filter shipments based on search term
+    const filtered = shipments.filter((s) =>
+      s.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      s.origin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      s.destination.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredShipments(filtered);
+  }, [searchTerm, shipments]);
+
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this shipment?')) {

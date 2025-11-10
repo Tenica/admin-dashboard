@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings as SettingsIcon, Bell, Lock, Palette } from 'lucide-react';
+import { Bell, Lock, Palette } from 'lucide-react';
 
 interface SettingsProps {
   isDark: boolean;

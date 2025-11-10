@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogOut, Menu, X, Moon, Sun, Bell, Settings } from 'lucide-react';
+import { LogOut, Menu, Moon, Sun, Bell, Settings } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 interface NavbarProps {
