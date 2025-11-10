@@ -147,7 +147,7 @@ export const Shipments: React.FC<ShipmentsProps> = ({ isDark }) => {
                       </td>
                       <td className={`px-4 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                         {shipment.customer && typeof shipment.customer === 'object'
-                          ? shipment.customer.fullName || shipment.customer.name || 'N/A'
+                          ? (shipment.customer as any).fullName || (shipment.customer as any).name || 'N/A'
                           : 'N/A'}
                       </td>
                       <td className={`px-4 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -235,7 +235,7 @@ export const Shipments: React.FC<ShipmentsProps> = ({ isDark }) => {
                     </p>
                     <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       {shipment.customer && typeof shipment.customer === 'object'
-                        ? shipment.customer.fullName || shipment.customer.name || 'N/A'
+                        ? (shipment.customer as any).fullName || (shipment.customer as any).name || 'N/A'
                         : 'N/A'}
                     </p>
                   </div>

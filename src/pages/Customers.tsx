@@ -174,11 +174,17 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
       setSubmitting(true);
       if (modalMode === 'create') {
         const response = await customerService.createCustomer(formData);
-        setCustomers([...customers, response.customer]);
+        const newCustomer = response.customer || response.data;
+        if (newCustomer) {
+          setCustomers([...customers, newCustomer]);
+        }
         addToast('Customer created successfully', 'success');
       } else if (modalMode === 'edit' && selectedCustomer) {
         const response = await customerService.updateCustomer(selectedCustomer._id, formData);
-        setCustomers(customers.map((c) => (c._id === selectedCustomer._id ? response.customer : c)));
+        const updatedCustomer = response.customer || response.data;
+        if (updatedCustomer) {
+          setCustomers(customers.map((c) => (c._id === selectedCustomer._id ? updatedCustomer : c)));
+        }
         addToast('Customer updated successfully', 'success');
       }
       setShowModal(false);
@@ -203,7 +209,7 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
 
     try {
       setSubmitting(true);
-      const response = await shipmentService.createShipment({
+      await shipmentService.createShipment({
         customer: selectedCustomer._id,
         sendersName: shipmentData.sendersName,
         receiversName: shipmentData.receiversName,
@@ -211,9 +217,11 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
         destination: shipmentData.destination,
         weight: shipmentData.weight ? parseFloat(shipmentData.weight) : undefined,
         price: shipmentData.price ? parseFloat(shipmentData.price) : undefined,
-        status: 'pending'
+        status: 'pending',
+        trackingNumber: '',
+        admin: '',
+        deliveredAt: undefined
       });
-      console.log('Shipment created successfully:', response);
       addToast('Shipment created successfully', 'success');
       setShowShipmentModal(false);
       setShipmentData({

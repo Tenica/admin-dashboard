@@ -1,46 +1,85 @@
-# Getting Started with Create React App
+# AguDaniel Logistics Admin Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Professional admin dashboard for managing customers, shipments, and logistics operations with real-time tracking.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Customer Management** - CRUD operations with soft delete and recycle bin
+- **Shipment Management** - Full lifecycle management with timeline tracking
+- **Real-time Tracking** - Live shipment status and location updates
+- **Authentication** - JWT-based secure login and signup
+- **Dark Mode** - Full dark theme support
+- **Mobile Responsive** - Fully responsive design for all devices
+- **Location Tracking** - Current package location tracking
+- **Timeline Events** - Complete shipment history with timestamps
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Frontend**: React 18, TypeScript, Tailwind CSS v3, React Router v7
+- **State Management**: React Context API
+- **HTTP Client**: Axios with interceptors
+- **Icons**: Lucide React
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+```bash
+# Install dependencies
+npm install
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Create .env file
+cp .env.example .env
 
-### `npm run build`
+# Start development
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Build & Deploy
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# Build for production
+npm run build
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Deploy to Vercel
+# 1. Push to GitHub
+# 2. Connect repository in Vercel dashboard
+# 3. Set REACT_APP_API_URL environment variable
+# 4. Deploy
+```
 
-### `npm run eject`
+## Environment Variables
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+REACT_APP_API_URL=https://your-backend-api.vercel.app
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+src/
+├── components/     # Reusable UI components
+├── context/        # React Context (Auth, Toast)
+├── pages/          # Page components
+├── services/       # API service layer
+├── types/          # TypeScript interfaces
+└── App.tsx         # Main app
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## API Endpoints
 
-## Learn More
+**Auth**: `/auth/login-admin`, `/auth/create-admin`, `/auth/logout-admin`
+**Customers**: `/customer/*` endpoints
+**Shipments**: `/shipment/*` endpoints
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### To Vercel
+1. Push code to GitHub
+2. Import repository in Vercel
+3. Add environment variables
+4. Deploy
+
+For detailed instructions, see documentation.
+
+## License
+
+Proprietary - AguDaniel Logistics

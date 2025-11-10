@@ -181,7 +181,10 @@ export const ShipmentDetail: React.FC<ShipmentDetailProps> = ({ isDark }) => {
       console.log('Update response:', response);
 
       // Set initial response data
-      setShipment(response.shipment || response.data || response);
+      const shipmentData = response.shipment || response.data;
+      if (shipmentData && typeof shipmentData === 'object' && '_id' in shipmentData) {
+        setShipment(shipmentData as Shipment);
+      }
       setIsEditing(false);
 
       // Refetch the full shipment data to ensure all fields (especially customer) are properly populated
