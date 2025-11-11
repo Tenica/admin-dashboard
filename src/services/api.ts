@@ -168,7 +168,7 @@ export const shipmentService = {
 
   async getShipmentById(id: string): Promise<ApiResponse<Shipment>> {
     try {
-      const response = await api.get<ApiResponse<Shipment>>(`/shipment/${id}`);
+      const response = await api.get<ApiResponse<Shipment>>(`/shipment/delete-shipment/${id}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -205,7 +205,7 @@ export const shipmentService = {
 
   async deleteShipment(id: string): Promise<ApiResponse<void>> {
     try {
-      const response = await api.delete<ApiResponse<void>>(`/shipment/${id}`);
+      const response = await api.delete<ApiResponse<void>>(`/shipment/delete-shipment/${id}`);
       return response.data;
     } catch (error) {
       throw error;
