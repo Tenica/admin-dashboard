@@ -398,7 +398,9 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
                     colSpan={6}
                     className={`px-4 sm:px-6 py-12 text-center ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
                   >
-                    {searchTerm ? 'No customers found matching your search' : 'No customers found'}
+                    {searchTerm
+                      ? 'No customers found matching your search. Try a different search term.'
+                      : 'No customers in the system. Click "New Customer" to add one.'}
                   </td>
                 </tr>
               )}
@@ -513,7 +515,9 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
             ))
           ) : (
             <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-              {searchTerm ? 'No customers found matching your search' : 'No customers found'}
+              {searchTerm
+                ? 'No customers found matching your search. Try a different search term.'
+                : 'No customers in the system. Click "New Customer" to add one.'}
             </div>
           )}
         </div>

@@ -201,7 +201,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ isDark }) => {
                     colSpan={5}
                     className={`px-4 sm:px-6 py-12 text-center ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
                   >
-                    No shipments found
+                    No shipments in the system. Go to Customers page to create a shipment.
                   </td>
                 </tr>
               )}
@@ -261,7 +261,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ isDark }) => {
             ))
           ) : (
             <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-              No shipments found
+              No shipments in the system. Go to Customers page to create a shipment.
             </div>
           )}
         </div>
