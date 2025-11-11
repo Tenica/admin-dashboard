@@ -87,6 +87,8 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
         console.log('Attempting to delete customer with ID:', id);
         await customerService.deleteCustomer(id);
         addToast('Customer deleted successfully', 'success');
+        // Add a small delay to ensure backend has processed the delete
+        await new Promise(resolve => setTimeout(resolve, 300));
         // Refresh the entire customer list
         await fetchCustomers();
       } catch (error: any) {
@@ -107,6 +109,12 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
       addToast('Customer restored successfully', 'success');
       // Refresh all customers to update both lists
       await fetchCustomers();
+      // If no more deleted customers, auto-hide the section
+      const deletedResponse = await customerService.getDeletedCustomers();
+      const deletedData = deletedResponse.customers || deletedResponse.data || [];
+      if (Array.isArray(deletedData) && deletedData.length === 0) {
+        setShowDeletedCustomers(false);
+      }
     } catch (error: any) {
       console.error('Error restoring customer:', error);
       const errorMessage = error?.response?.data?.message || error?.response?.data?.error || error?.message || 'Failed to restore customer';
