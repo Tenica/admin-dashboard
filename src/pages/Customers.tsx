@@ -293,28 +293,29 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
         </div>
       </div>
 
-      {/* Customers Table */}
+      {/* Customers Table - Mobile and Desktop Views */}
       <div className={`rounded-lg border ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-        <div className="overflow-x-auto">
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className={`border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   Name
                 </th>
-                <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   Email
                 </th>
-                <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   Phone
                 </th>
-                <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   City
                 </th>
-                <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   Joined
                 </th>
-                <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   Actions
                 </th>
               </tr>
@@ -326,22 +327,22 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
                     key={customer._id}
                     className={`border-b ${isDark ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-200 hover:bg-gray-50'}`}
                   >
-                    <td className={`px-6 py-4 text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <td className={`px-4 sm:px-6 py-4 text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {customer.fullName}
                     </td>
-                    <td className={`px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <td className={`px-4 sm:px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       {customer.email}
                     </td>
-                    <td className={`px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <td className={`px-4 sm:px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       {customer.phone}
                     </td>
-                    <td className={`px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <td className={`px-4 sm:px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       {customer.city}
                     </td>
-                    <td className={`px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <td className={`px-4 sm:px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       {new Date(customer.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 sm:px-6 py-4">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleOpenModal('view', customer)}
@@ -395,7 +396,7 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
                 <tr>
                   <td
                     colSpan={6}
-                    className={`px-6 py-12 text-center ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                    className={`px-4 sm:px-6 py-12 text-center ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
                   >
                     {searchTerm ? 'No customers found matching your search' : 'No customers found'}
                   </td>
@@ -403,6 +404,118 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3 p-4">
+          {filteredCustomers.length > 0 ? (
+            filteredCustomers.map((customer) => (
+              <div
+                key={customer._id}
+                className={`rounded-lg border p-4 transition-colors ${isDark ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-gray-50 border-gray-200 hover:bg-gray-100'}`}
+              >
+                <div className="flex justify-between items-start gap-3 mb-3">
+                  <div>
+                    <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      Name
+                    </p>
+                    <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {customer.fullName}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => handleOpenModal('view', customer)}
+                      className={`p-2 rounded-lg transition-colors ${
+                        isDark
+                          ? 'hover:bg-gray-600 text-gray-300'
+                          : 'hover:bg-gray-200 text-gray-600'
+                      }`}
+                      title="View"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleOpenModal('edit', customer)}
+                      className={`p-2 rounded-lg transition-colors ${
+                        isDark
+                          ? 'hover:bg-gray-600 text-blue-400'
+                          : 'hover:bg-gray-200 text-blue-600'
+                      }`}
+                      title="Edit"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(customer._id)}
+                      className={`p-2 rounded-lg transition-colors ${
+                        isDark
+                          ? 'hover:bg-gray-600 text-red-400'
+                          : 'hover:bg-gray-200 text-red-600'
+                      }`}
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleOpenShipmentModal(customer)}
+                      className={`p-2 rounded-lg transition-colors ${
+                        isDark
+                          ? 'hover:bg-gray-600 text-green-400'
+                          : 'hover:bg-gray-200 text-green-600'
+                      }`}
+                      title="Create Shipment"
+                    >
+                      <Truck className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div>
+                    <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      Email
+                    </p>
+                    <p className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                      {customer.email}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        Phone
+                      </p>
+                      <p className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                        {customer.phone}
+                      </p>
+                    </div>
+                    <div>
+                      <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        City
+                      </p>
+                      <p className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                        {customer.city}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      Joined
+                    </p>
+                    <p className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                      {new Date(customer.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              {searchTerm ? 'No customers found matching your search' : 'No customers found'}
+            </div>
+          )}
         </div>
       </div>
 
@@ -655,28 +768,30 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
 
         {showDeletedCustomers && (
           <div className={`rounded-lg border ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-            <div className={`px-6 py-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+            <div className={`px-4 sm:px-6 py-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
               <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 Deleted Customers (Recycle Bin)
               </h2>
             </div>
-            <div className="overflow-x-auto">
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className={`border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                    <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       Name
                     </th>
-                    <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       Email
                     </th>
-                    <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       Phone
                     </th>
-                    <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       City
                     </th>
-                    <th className={`px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <th className={`px-4 sm:px-6 py-3 text-left text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       Actions
                     </th>
                   </tr>
@@ -688,19 +803,19 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
                         key={customer._id}
                         className={`border-b ${isDark ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-200 hover:bg-gray-50'}`}
                       >
-                        <td className={`px-6 py-4 text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                        <td className={`px-4 sm:px-6 py-4 text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                           {customer.fullName}
                         </td>
-                        <td className={`px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <td className={`px-4 sm:px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                           {customer.email}
                         </td>
-                        <td className={`px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <td className={`px-4 sm:px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                           {customer.phone}
                         </td>
-                        <td className={`px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <td className={`px-4 sm:px-6 py-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                           {customer.city}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 sm:px-6 py-4">
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => handleRestoreCustomer(customer._id)}
@@ -732,7 +847,7 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
                     <tr>
                       <td
                         colSpan={5}
-                        className={`px-6 py-12 text-center ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                        className={`px-4 sm:px-6 py-12 text-center ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
                       >
                         No deleted customers found
                       </td>
@@ -740,6 +855,87 @@ export const Customers: React.FC<CustomersProps> = ({ isDark }) => {
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-3 p-4">
+              {deletedCustomers.length > 0 ? (
+                deletedCustomers.map((customer) => (
+                  <div
+                    key={customer._id}
+                    className={`rounded-lg border p-4 transition-colors ${isDark ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-gray-50 border-gray-200 hover:bg-gray-100'}`}
+                  >
+                    <div className="flex justify-between items-start gap-3 mb-3">
+                      <div>
+                        <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          Name
+                        </p>
+                        <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                          {customer.fullName}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleRestoreCustomer(customer._id)}
+                          className={`p-2 rounded-lg transition-colors ${
+                            isDark
+                              ? 'hover:bg-gray-600 text-green-400'
+                              : 'hover:bg-gray-200 text-green-600'
+                          }`}
+                          title="Restore Customer"
+                        >
+                          <RotateCcw className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handlePermanentlyDeleteCustomer(customer._id)}
+                          className={`p-2 rounded-lg transition-colors ${
+                            isDark
+                              ? 'hover:bg-gray-600 text-red-400'
+                              : 'hover:bg-gray-200 text-red-600'
+                          }`}
+                          title="Permanently Delete"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div>
+                        <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          Email
+                        </p>
+                        <p className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                          {customer.email}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                            Phone
+                          </p>
+                          <p className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                            {customer.phone}
+                          </p>
+                        </div>
+                        <div>
+                          <p className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                            City
+                          </p>
+                          <p className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                            {customer.city}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  No deleted customers found
+                </div>
+              )}
             </div>
           </div>
         )}
