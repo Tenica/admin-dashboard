@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
@@ -25,7 +25,16 @@ import { Loading } from './components/common/Loading';
 const AppContent: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    // Initialize from localStorage, default to false
+    const saved = localStorage.getItem('isDarkMode');
+    return saved !== null ? JSON.parse(saved) : false;
+  });
+
+  // Save isDark preference to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('isDarkMode', JSON.stringify(isDark));
+  }, [isDark]);
 
   // Show loading screen while checking authentication state from localStorage
   if (loading) {
