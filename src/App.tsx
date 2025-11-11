@@ -19,14 +19,20 @@ import { Admins } from './pages/Admins';
 import { Settings } from './pages/Settings';
 import { Map } from './pages/Map';
 import { NotFound } from './pages/NotFound';
+import { Loading } from './components/common/Loading';
 
 // Main app content component
 const AppContent: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
-  // If not authenticated, only show login and signup pages
+  // Show loading screen while checking authentication state from localStorage
+  if (loading) {
+    return <Loading isDark={isDark} />;
+  }
+
+  // If not authenticated after loading check, show login/signup pages
   if (!isAuthenticated) {
     return (
       <Routes>
