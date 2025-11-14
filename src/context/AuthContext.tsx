@@ -54,7 +54,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error('Invalid response from server');
       }
     } catch (err: any) {
-      const errorMessage = err?.response?.data?.message || err?.message || 'An error occurred during login';
+      let errorMessage = 'An error occurred during login';
+
+      // Handle timeout errors
+      if (err?.code === 'ECONNABORTED' || err?.message?.includes('timeout')) {
+        errorMessage = 'Connection timeout. The server is taking too long to respond. Please check your internet connection and try again.';
+      } else if (err?.response?.status === 0 || err?.message?.includes('Network Error')) {
+        errorMessage = 'Network error. Unable to connect to the server. Please check your internet connection.';
+      } else if (err?.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
+
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
