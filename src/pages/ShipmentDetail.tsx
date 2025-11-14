@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Edit2, Trash2, CheckCircle, Loader } from 'lucide-react';
+import { ArrowLeft, Edit2, Trash2, CheckCircle, Loader, Download } from 'lucide-react';
 import { shipmentService } from '../services/api';
 import { Shipment, TrackingEvent } from '../types';
 import { Loading } from '../components/common/Loading';
 import { useToast } from '../context/ToastContext';
+import { generateReceiptPDF } from '../utils/receiptGenerator';
 
 interface ShipmentDetailProps {
   isDark: boolean;
@@ -56,6 +57,7 @@ export const ShipmentDetail: React.FC<ShipmentDetailProps> = ({ isDark }) => {
   const [loadingTimeline, setLoadingTimeline] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [downloadingReceipt, setDownloadingReceipt] = useState(false);
 
   const [formData, setFormData] = useState({
     sendersName: '',
@@ -236,6 +238,21 @@ export const ShipmentDetail: React.FC<ShipmentDetailProps> = ({ isDark }) => {
     }
   };
 
+  const handleDownloadReceipt = async () => {
+    if (!shipment) return;
+
+    try {
+      setDownloadingReceipt(true);
+      await generateReceiptPDF(shipment, shipment.customer);
+      addToast('Receipt downloaded successfully', 'success');
+    } catch (error) {
+      console.error('Error generating receipt:', error);
+      addToast('Failed to generate receipt', 'error');
+    } finally {
+      setDownloadingReceipt(false);
+    }
+  };
+
   if (loading) {
     return <Loading isDark={isDark} />;
   }
@@ -296,6 +313,19 @@ export const ShipmentDetail: React.FC<ShipmentDetailProps> = ({ isDark }) => {
             </div>
             {!isEditing && (
               <div className="flex items-center gap-2">
+                <button
+                  onClick={handleDownloadReceipt}
+                  disabled={downloadingReceipt}
+                  className={`px-3 py-2 rounded-lg transition-colors flex items-center gap-2 font-medium text-sm ${
+                    isDark
+                      ? 'bg-green-600 hover:bg-green-700 text-white disabled:opacity-50'
+                      : 'bg-green-600 hover:bg-green-700 text-white disabled:opacity-50'
+                  }`}
+                  title="Download Receipt"
+                >
+                  <Download className="w-4 h-4" />
+                  {downloadingReceipt ? 'Generating...' : 'Download Receipt'}
+                </button>
                 <button
                   onClick={() => setIsEditing(true)}
                   className={`p-2 rounded-lg transition-colors ${
